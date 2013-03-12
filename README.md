@@ -13,7 +13,7 @@ have "StoryText2" in the div tag.  The app loads these links into a list.
 Once the links are loaded into the list, we iterate through the links and 
 print out the page contents into an html file.
 
-## Hmm, wonder if I should store which links have been previously pulled and
+...Hmm, wonder if I should store which links have been previously pulled and
 only pull the new links - Arg,
 
 # Depends
