@@ -1,12 +1,29 @@
 #!/usr/bin/python
-# 1) Scrap PDN for links
-# 2) Follow links to scrape article, ad-free. Because honestly, who really clicks on
-# 3) those things anyway? Nevermind the layout is total #FAIL on a smartphone.
-# 4) Enjoy less shitty layout
-# 5) Prophet! Er, maybe not so much.
+# Copyright (C) 2013 Jeremy Johnson
+# Scrapes the PDN and outputs to HTML, ad-free
+#
 # Written by @beyondnegative
-# Last edited: 3/8/2013
-# License: GPLv2
+# Last edited: 3/11/2013
+# 
+"""
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  
+If not, see http://www.gnu.org/licenses/gpl-3.0.html
+"""
+#
+# Depends:
+#   BeautifulSoup 
+#   Requests 
 
 import requests
 import time
@@ -15,7 +32,7 @@ from BeautifulSoup import BeautifulSoup
 from datetime import date, timedelta, datetime
 
 
-""" ------ Load Global Values ------ """
+# ------ Load Global Values ------
 # Yes, yes, I know. Global = Bad, Local = Good. Gimme a break, still learning .py
 site = 'http://peninsuladailynews.com'
 # fetch_days = 2  # How many previous days worth to pull
@@ -25,7 +42,7 @@ titles = [] # Pull title of links from home
 stories = [] # Collect the stories
 storyID = [] # Story IDs
 
-""" Scrape the home page for news links to follow """
+# Scrape the home page for news links to follow
 def scrape_home():
         page = requests.get(site)
         soup = BeautifulSoup(page.text)
@@ -50,11 +67,12 @@ def scrape_home():
                             links.append(site + link)
                             titles.append(title)
                             storyID.append(articleId)
+
                 except:
                     pass # Else, move on, don't save link
 
-""" Parse out date range news only """
-""" FOR FUTURE FEATURE """
+# Parse out date range news only
+# FOR FUTURE FEATURE
 def today_news():
         for link in linky:
                 linkdate = link[38:46]
@@ -65,8 +83,8 @@ def today_news():
                 except:
                         pass
 
-""" Come up with a range of days to fetch  """
-""" FOR FUTURE FEATURE """
+# Come up with a range of days to fetch
+## FOR FUTURE FEATURE
 def eval_date(days_to_fetch):
         now = date.today()
         days = []
@@ -76,7 +94,7 @@ def eval_date(days_to_fetch):
                 days.append(past_date)
         return days
 
-""" Scrape an article once we have the linky """
+# Scrape an article once we have the linky
 def scrape_article(link):
         r = requests.get(link)
         soup = BeautifulSoup(r.text)
